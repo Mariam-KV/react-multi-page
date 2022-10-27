@@ -22,7 +22,7 @@ let DetailQuotes = () => {
   if (error) {
     return <p className="centered focused">{error}</p>;
   }
-  
+
   if ((status === "completed" && !data) || data.length === 0) {
     return <NoQuotesFound />;
   } else {
@@ -30,18 +30,8 @@ let DetailQuotes = () => {
       <div>
         <HighlightedQuote quote={data} />
         <Switch>
-          <Route path={`/allQuotes/${data.id}/`} exact>
-            <div className="centered">
-              <Link
-                to={`/allQuotes/${data.id}/comments`}
-                className="btn--flat "
-              >
-                Add Comments
-              </Link>
-            </div>
-          </Route>
-          <Route path={`/allQuotes/${data.id}/comments`}>
-            <Comments />
+          <Route path={`/allQuotes/${data.id}`}>
+            <Comments id={data.id} />
           </Route>
         </Switch>
       </div>
