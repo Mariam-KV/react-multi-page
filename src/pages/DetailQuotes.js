@@ -1,4 +1,4 @@
-import { useParams, Route, Switch } from "react-router-dom";
+import { useParams, Route, Switch, Link } from "react-router-dom";
 import Comments from "../components/comments/Comments";
 import HighlightedQuote from "../components/quotes/HighlightedQuote";
 import NoQuotesFound from "../components/quotes/NoQuotesFound";
@@ -30,6 +30,17 @@ let DetailQuotes = () => {
       <div>
         <HighlightedQuote quote={data} />
         <Switch>
+          <Route path={`/allQuotes/${data.id}/`} exact>
+            <div className="centered">
+              <Link
+                to={`/allQuotes/${data.id}/comments`}
+                className="btn--flat "
+              >
+                Load Comments
+              </Link>
+            </div>
+          </Route>
+
           <Route path={`/allQuotes/${data.id}/comments`}>
             <Comments id={data.id} />
           </Route>
