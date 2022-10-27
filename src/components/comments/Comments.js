@@ -2,10 +2,8 @@ import { useState, useCallback, useEffect } from "react";
 import useHttp from "../../hooks/use-http";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import { getAllComments } from "../../lib/api";
-import { Route, Link } from "react-router-dom";
 import classes from "./Comments.module.css";
 import NewCommentForm from "./NewCommentForm";
-
 import CommentList from "./CommentsList";
 
 const Comments = (props) => {
@@ -33,7 +31,7 @@ const Comments = (props) => {
   if (error) {
     return <p className="centered focused">{error}</p>;
   }
-  console.log(data);
+
   //if (status === "completed" && !data.commentData) {
   //return <p className="centered">No comments found</p>;
   //}
@@ -41,26 +39,21 @@ const Comments = (props) => {
     <section className={classes.comments}>
       <h2>User Comments</h2>
       {!isAddingComment && (
-        <Link
-          className="btn"
-          onClick={startAddCommentHandler}
-          to={`/allQuotes/${id}/comments`}
-        >
+        <button className="btn" onClick={startAddCommentHandler}>
           Add a Comment
-        </Link>
+        </button>
       )}
-      <Route path={`/allQuotes/${id}/comments`}>
-        {isAddingComment && (
-          <NewCommentForm id={id} onAddedComment={handleAddComments} />
+
+      {isAddingComment && (
+        <NewCommentForm id={id} onAddedComment={handleAddComments} />
+      )}
+      <div>
+        {data.length !== 0 ? (
+          <CommentList comments={data} />
+        ) : (
+          <p className="centered">No comments were addded yet!</p>
         )}
-        <div>
-          {data.length !== 0 ? (
-            <CommentList comments={data} />
-          ) : (
-            <p className="centered">No comments were addded yet!</p>
-          )}
-        </div>
-      </Route>
+      </div>
     </section>
   );
 };
