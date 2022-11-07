@@ -1,16 +1,16 @@
 import QuoteList from "../components/quotes/QuoteList";
 import useHttp from "../hooks/use-http";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllQuotes } from "../lib/api";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import NoQuotesFound from "../components/quotes/NoQuotesFound";
 
 let AllQuotes = () => {
   let { sendRequest, status, data, error } = useHttp(getAllQuotes, true);
-
+  let [deleting, setDelete] = useState("");
   useEffect(() => {
     sendRequest();
-  }, [sendRequest]);
+  }, [sendRequest, deleting]);
   if (status === "pending") {
     return (
       <div className="centered">
@@ -24,7 +24,7 @@ let AllQuotes = () => {
   if (status === "completed" && (!data || data.length === 0)) {
     return <NoQuotesFound />;
   } else {
-    return <QuoteList quotes={data} />;
+    return <QuoteList quotes={data} onFetch={setDelete} />;
   }
 };
 export default AllQuotes;

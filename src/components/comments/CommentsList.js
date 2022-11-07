@@ -5,7 +5,13 @@ const CommentsList = (props) => {
   return (
     <ul className={classes.comments}>
       {props.comments.map((comment) => (
-        <CommentItem key={comment.id} text={comment.commentData} />
+        <CommentItem
+          itemId={props.itemId}
+          key={comment.id}
+          text={comment.commentData}
+          id={comment.id}
+          onFetch={props.onFetch}
+        />
       ))}
     </ul>
   );

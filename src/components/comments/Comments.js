@@ -8,14 +8,16 @@ import CommentList from "./CommentsList";
 
 const Comments = (props) => {
   const [isAddingComment, setIsAddingComment] = useState(false);
+  let [deleting, setDelete] = useState("");
   let { sendRequest, data, error, status } = useHttp(getAllComments, true);
   const startAddCommentHandler = () => {
     setIsAddingComment(true);
   };
   let id = props.id;
   useEffect(() => {
+   
     sendRequest(id);
-  }, [sendRequest, id]);
+  }, [sendRequest, id, deleting]);
   let handleAddComments = useCallback(() => {
     sendRequest(id);
     setIsAddingComment(false);
@@ -32,9 +34,6 @@ const Comments = (props) => {
     return <p className="centered focused">{error}</p>;
   }
 
-  //if (status === "completed" && !data.commentData) {
-  //return <p className="centered">No comments found</p>;
-  //}
   return (
     <section className={classes.comments}>
       <h2>User Comments</h2>
@@ -49,7 +48,7 @@ const Comments = (props) => {
       )}
       <div>
         {data.length !== 0 ? (
-          <CommentList comments={data} />
+          <CommentList comments={data} itemId={id} onFetch={setDelete} />
         ) : (
           <p className="centered">No comments were addded yet!</p>
         )}
