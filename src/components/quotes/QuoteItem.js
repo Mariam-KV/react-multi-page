@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const QuoteItem = (props) => {
   let handleDelete = () => {
     fetch(
-      `https://react1-9a97e-default-rtdb.firebaseio.com/quotes/${props.id}.json`,
+      `https://react-projects-160bb-default-rtdb.firebaseio.com/multi-page/quotes/${props.id}.json`,
       {
         method: "DELETE",
       }
